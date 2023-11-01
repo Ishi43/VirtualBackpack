@@ -4,33 +4,32 @@
 //
 //  Created by Ishika Meel on 10/31/23.
 //
-
 import SwiftUI
-struct Bday: View {
+struct BDayView: View {
     
     
     @State private var title: String=""
-    @Environment(\.managedObjectContext)private var viewContext
+    @Environment(\.managedObjectContext)private var customContext
     @FetchRequest(
-        entity: Task.entity(),
+        entity: BTask.entity(),
         sortDescriptors: [
             NSSortDescriptor(key: "dateCreated", ascending: false)
         ]
     )
-    private var allTasks: FetchedResults<Task>
+    private var allTasks: FetchedResults<BTask>
     private func saveTask(){
         do {
-            let task = Task(context: viewContext)
+            let task = BTask(context: customContext)
             task.title = title
-            try viewContext.save()
+            try customContext.save()
         } catch {
             print(error.localizedDescription)
         }
     }
-    private func updateTask(_ task: Task) {
+    private func updateTask(_ task: BTask) {
         task.isFavorite.toggle() // Toggle the isFavorite property
         do {
-            try viewContext.save()
+            try customContext.save()
         } catch {
             print(error.localizedDescription)
         }
@@ -39,10 +38,10 @@ struct Bday: View {
     private func deleteTask(at offsets: IndexSet) {
         offsets.forEach { index in
             let task = allTasks [index]
-            viewContext.delete(task)
+            customContext.delete(task)
             
             do {
-                try viewContext.save()
+                try customContext.save()
             } catch {
                 print (error.localizedDescription)
             }
@@ -50,13 +49,13 @@ struct Bday: View {
     }
     var body: some View {
         NavigationView{
-            Text("B Day Backpack")
-                .font(.title)
-                .bold()
+            
             VStack {
                 Spacer()
+                Text("B-Day Backpack")
+                    .font(.title)
+                    .bold()
                 
-                    
                 
                 TextField("Enter Object", text: $title)
                     .textFieldStyle(.roundedBorder)
@@ -87,11 +86,13 @@ struct Bday: View {
         }
     }
     
-    
-    struct TryAgain_Previews: PreviewProvider {
-        static var previews: some View {
-            let persistentContainer = CoreDataManager.shared.persistentContainer
-            TryAgain().environment(\.managedObjectContext, persistentContainer.viewContext)
-        }
-    }
 }
+struct TryAgain_Previews: PreviewProvider {
+       static var previews: some View {
+           let persistentContainer = CoreDataManager.shared.persistentContainer
+           let customContext = CoreDataManager.shared.customContext
+           BDayView().environment(\.managedObjectContext,customContext)
+           
+       }
+   }
+

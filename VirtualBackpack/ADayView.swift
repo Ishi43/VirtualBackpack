@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-struct TryAgain: View {
+struct ADayView: View {
     
     
     @State private var title: String=""
@@ -53,7 +53,7 @@ struct TryAgain: View {
             
             VStack {
                 Spacer()
-                Text("A Day Backpack")
+                Text("A-Day Backpack")
                     .font(.title)
                     .bold()
                     
@@ -91,7 +91,7 @@ struct TryAgain: View {
     struct TryAgain_Previews: PreviewProvider {
         static var previews: some View {
             let persistentContainer = CoreDataManager.shared.persistentContainer
-            TryAgain().environment(\.managedObjectContext, persistentContainer.viewContext)
+            ADayView().environment(\.managedObjectContext, persistentContainer.viewContext)
         }
     }
 }

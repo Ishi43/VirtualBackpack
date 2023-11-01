@@ -21,37 +21,45 @@ struct ContentView: View {
                     Color(red: 246/255, green: 240/255, blue: 214/255)
                         .ignoresSafeArea()
                     VStack {
-                        NavigationLink(destination: TryAgain()) {
+                        Text("Virtual\nBackpack")
+                            .multilineTextAlignment(.center)
+                            .bold()
+                            .offset(y:-100)
+                            .font(.system(size:50))
+                        
+                        NavigationLink(destination: ADayView()) {
                             ZStack {
                                 Capsule()
-                                    .fill( Color(red: 172/255, green: 214/255, blue: 87/255))
-                                    .frame(width: 437.5, height: 187.5)
+                                    .fill( Color(red: 200/255, green: 180/255, blue: 210/255))
+                                    .frame(width: 350, height: 175.5)
+                                    .offset(y:-100)
                                 
-                                Text("Calendar")
+                                Text("A Day Backpack")
                                     .fontWeight(.bold)
                                     .foregroundColor(.black)
-                                    .font(.largeTitle)
-                                    .offset(x:80)
+                                    .font(.title)
+                                    .offset(x:0,y:-100)
                                 
                             }
                         }
-                        .offset(x:-180, y:30)
+                        .offset(x:0, y:30)
                         
                         
-                        NavigationLink(destination: Bday()) {
+                       NavigationLink(destination: BDayView()) {
                             ZStack {
                                 Capsule()
-                                    .fill(Color(red: 149/255, green: 214/255, blue: 255/255))
-                                    .frame(width: 437.5, height: 187.5)
+                                    .fill(Color(red: 210/255, green: 180/255, blue: 200/255))
+                                    .frame(width: 350, height: 175.5)
+                                    .offset(y:-50)
                                 
-                                Text("Resources")
+                                Text("B Day Backpack")
                                     .fontWeight(.bold)
                                     .foregroundColor(.black)
-                                    .font(.largeTitle)
-                                    .offset(x:-95, y:0)
+                                    .font(.title)
+                                    .offset(x:0, y:-50)
                             }
                         }
-                        .offset(x:190, y:20)
+                        .offset(x:0, y:30)
                         
                     }
                 }
@@ -62,10 +70,13 @@ struct ContentView: View {
     }
         
         
-        struct ContentView_Previews: PreviewProvider {
-            static var previews: some View {
-                ContentView()
-            }
-        }
-        
-    }
+    struct ContentView_Previews: PreviewProvider {
+               static var previews: some View {
+                   let persistentContainer = CoreDataManager.shared.persistentContainer
+                   ContentView().environment(\.managedObjectContext, persistentContainer.viewContext)
+               
+               }
+           }
+           
+       }
+

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 @main
 struct VirtualBackpackApp: App {
     var body: some Scene {
@@ -15,3 +14,4 @@ struct VirtualBackpackApp: App {
         }
     }
 }
+

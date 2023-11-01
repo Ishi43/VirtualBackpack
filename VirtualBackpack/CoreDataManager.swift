@@ -10,10 +10,15 @@ import CoreData
 class CoreDataManager {
     
     let persistentContainer: NSPersistentContainer
+    let customContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+    
     static let shared: CoreDataManager = CoreDataManager()
     
     private init() {
         persistentContainer = NSPersistentContainer(name: "ToDoModel")
+        customContext.parent = persistentContainer.viewContext
+
+        
         
         persistentContainer.loadPersistentStores { (description, error) in
             if let error = error {
@@ -25,3 +30,4 @@ class CoreDataManager {
         }
     }
 }
+
